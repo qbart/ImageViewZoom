@@ -408,11 +408,13 @@ public class ImageViewTouchBase extends ImageView implements IDisposable {
 	}
 
 	protected void panBy( double dx, double dy ) {
-		RectF rect = getBitmapRect();
-		mScrollRect.set( (float) dx, (float) dy, 0, 0 );
-		updateRect( rect, mScrollRect );
-		postTranslate( mScrollRect.left, mScrollRect.top );
-		center( true, true );
+		if (getDrawable() != null) {
+			RectF rect = getBitmapRect();
+			mScrollRect.set( (float) dx, (float) dy, 0, 0 );
+			updateRect( rect, mScrollRect );
+			postTranslate( mScrollRect.left, mScrollRect.top );
+			center( true, true );
+		}
 	}
 
 	protected void updateRect( RectF bitmapRect, RectF scrollRect ) {
