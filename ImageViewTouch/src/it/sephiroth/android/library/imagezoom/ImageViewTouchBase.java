@@ -226,7 +226,7 @@ public class ImageViewTouchBase extends ImageView implements IDisposable {
 
 		float fw = (float) drawable.getIntrinsicWidth() / (float) mThisWidth;
 		float fh = (float) drawable.getIntrinsicHeight() / (float) mThisHeight;
-		float max = Math.max( fw, fh ) * 4;
+		float max = Math.max( fw, fh ) * 15;// 4;
 		return max;
 	}
 
@@ -312,7 +312,7 @@ public class ImageViewTouchBase extends ImageView implements IDisposable {
 		return mBitmapRect;
 	}
 
-	protected float getScale( Matrix matrix ) {
+	public float getScale( Matrix matrix ) {
 		return getValue( matrix, Matrix.MSCALE_X );
 	}
 

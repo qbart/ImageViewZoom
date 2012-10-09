@@ -33,6 +33,7 @@ public class ImageViewTouch extends ImageViewTouchBase {
 	protected boolean mScrollEnabled = true;
 
 	private OnImageViewTouchDoubleTapListener doubleTapListener;
+	private OnImageViewTouchSingleTapListener singleTapListener;
 
 	public ImageViewTouch(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -119,6 +120,10 @@ public class ImageViewTouch extends ImageViewTouchBase {
 
 	public void setDoubleTapListener(OnImageViewTouchDoubleTapListener doubleTapListener) {
 		this.doubleTapListener = doubleTapListener;
+	}
+
+	public void setSingleTapListener(OnImageViewTouchSingleTapListener singleTapListener) {
+		this.singleTapListener = singleTapListener;
 	}
 
 	public void setDoubleTapToZoomEnabled(boolean value) {
@@ -225,7 +230,7 @@ public class ImageViewTouch extends ImageViewTouchBase {
 
 		@Override
 		public boolean onDoubleTap(MotionEvent e) {
-			Log.i(LOG_TAG, "onDoubleTap. double tap enabled? " + mDoubleTapToZoomEnabled);
+			// Log.i(LOG_TAG, "onDoubleTap. double tap enabled? " + mDoubleTapToZoomEnabled);
 			if (mDoubleTapToZoomEnabled) {
 				float scale = getScale();
 				float targetScale = scale;
@@ -290,6 +295,14 @@ public class ImageViewTouch extends ImageViewTouchBase {
 			}
 			return super.onFling(e1, e2, velocityX, velocityY);
 		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent e) {
+			if (singleTapListener != null)
+				singleTapListener.onSingleTap(e);
+
+			return super.onSingleTapConfirmed(e);
+		}
 	}
 
 	public class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -313,5 +326,9 @@ public class ImageViewTouch extends ImageViewTouchBase {
 
 	public interface OnImageViewTouchDoubleTapListener {
 		void onDoubleTap();
+	}
+
+	public interface OnImageViewTouchSingleTapListener {
+		void onSingleTap(MotionEvent e);
 	}
 }
